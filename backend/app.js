@@ -60,6 +60,21 @@ router.delete("/todos/:id", async (req, res) => {
   }
 });
 
+// Löscht alle Todos
+router.delete("/todos", async (req, res) => {
+  try {
+    // SQL-Abfrage, die alle Todos löscht
+    await pool.query("DELETE FROM todos");
+
+    // Erfolgsantwort mit Status 204 (No Content)
+    res.status(204).send();
+  } catch (err) {
+    // Fehlerbehandlung
+    console.error("Fehler beim Löschen aller Todos:", err);
+    res.status(500).json({ error: "Fehler beim Löschen der Todos" });
+  }
+});
+
 // 👉 ALLES unter /api
 app.use("/api", router);
 
